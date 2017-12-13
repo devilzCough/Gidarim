@@ -14,10 +14,11 @@
         android:theme="@style/AppTheme">
 
         <GridLayout
+            android:id="@+id/topBar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:columnCount="3"
-            android:background="#f2b8a2">
+            android:background="#f2d1b3">
 
             <Button
                 android:id="@+id/btnSettings"
@@ -47,6 +48,7 @@
                 android:onClick="onAddBtnClicked"/>
         </GridLayout>
         <LinearLayout
+            android:id="@+id/dashboard"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:background="#538ea6"

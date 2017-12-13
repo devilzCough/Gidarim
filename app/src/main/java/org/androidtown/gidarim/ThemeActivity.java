@@ -1,44 +1,60 @@
 package org.androidtown.gidarim;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class ThemeActivity extends AppCompatActivity {
 
-    int nTheme;
+    int themeNum;
     String[] themeList = {"MODERN", "CHOCOLATE"};
     int[] themeColor = {Color.rgb(83, 142, 166), Color.rgb(92, 75, 81)};
 
     ListView listView;
+    ArrayList<ThemeInfo> themeInfo;
+
+    // GridLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme);
 
-        nTheme = 2;
+        // nTheme = 2;
         listView = (ListView) findViewById(R.id.themeList);
-        ArrayList<ThemeInfo> themeInfo = new ArrayList<>();
-        for (int i = 0; i < nTheme; i++) {
-            ThemeInfo tmp = new ThemeInfo(i, themeList[i], themeColor[i]);
+        themeInfo = new ArrayList<>();
+        for (int i = 0; i < GidarimConstants.NTHEME; i++) {
+            ThemeInfo tmp = new ThemeInfo(themeList[i], themeColor[i]);
             themeInfo.add(tmp);
         }
 
-        ThemeAdapter adapter=new ThemeAdapter(this, R.layout.list_theme, themeInfo);
+        ThemeAdapter adapter = new ThemeAdapter(this, R.layout.list_theme, themeInfo);
         listView.setAdapter(adapter);
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, themeList);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        listView.setAdapter(adapter);
+                GridLayout layout = (GridLayout) findViewById(R.id.topBar);
+                layout.setBackgroundColor(GidarimConstants.BAR_COLOR[position]);
+                themeNum = position;
+                // Toast.makeText(ThemeActivity.this, themeInfo.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onBackBtnClicked(View v) {
+
+        Intent intent = new Intent();
+        intent.putExtra("theme", themeNum);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }
