@@ -25,38 +25,35 @@ public class EditActivity extends AppCompatActivity {
 
     int nYear, nMonth, nDay;
 
-    // EventInfo event;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
+        // to set topBar background color, get theme info
         Intent intent = getIntent();
         themeNum = intent.getExtras().getInt("theme");
         GridLayout layout = (GridLayout) findViewById(R.id.topBar);
         layout.setBackgroundColor(GidarimConstants.BAR_COLOR[themeNum]);
 
-        // event = new EventInfo();
+        etTitle = (EditText) findViewById(R.id.inputTitle);
+        etMemo = (EditText) findViewById(R.id.inputMemo);
 
+        // get today date
         Calendar cal = Calendar.getInstance();
         nYear = cal.get(Calendar.YEAR);
         nMonth = cal.get(Calendar.MONTH);
         nDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        etTitle = (EditText) findViewById(R.id.inputTitle);
-        etMemo = (EditText) findViewById(R.id.inputMemo);
-
+        // set default date to today
         date = (TextView) findViewById(R.id.selectDate);
         date.setText(nYear + ". " + nMonth + ". " + nDay);
         date.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
                 showDialog(DIALOG_DATE);
-
                 return true;
             }
         });
@@ -64,39 +61,40 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     @Deprecated
+    // make date picker dialog
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DIALOG_DATE :
-                DatePickerDialog dateDialog = new DatePickerDialog
-                        (EditActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dateDialog = new DatePickerDialog(EditActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
+                        // set date to selected day
+                        date.setText(year + ". " + (monthOfYear + 1) + ". " + dayOfMonth);
 
-                            public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
-                                date.setText(year + ". " + (monthOfYear + 1) + ". " + dayOfMonth);
-
-                                nYear = year;
-                                nMonth = monthOfYear + 1;
-                                nDay = dayOfMonth;
-                            }
-                        }, nYear, nMonth, nDay);
-
+                        nYear = year;
+                        nMonth = monthOfYear + 1;
+                        nDay = dayOfMonth;
+                    }
+                }, nYear, nMonth, nDay); // set default picker date
                 return dateDialog;
         }
         return super.onCreateDialog(id);
     }
 
-
-
+    // finish Activity
+    // then go MainActivity
     public void onBackBtnClicked(View v) {
-
         finish();
     }
 
+    // save input event data
+    // then send data to Main Activity
     public void onDoneBtnClicked(View v) {
 
         String title = etTitle.getText().toString();
         String date = nYear + ". " + nMonth + ". " + nDay;
         String memo = etMemo.getText().toString();
 
+        // calculated d-day
         Calendar today = Calendar.getInstance();
         Calendar dday = Calendar.getInstance();
         int tmpMonth = nMonth - 1;
@@ -106,16 +104,13 @@ public class EditActivity extends AppCompatActivity {
         long nDday = dday.getTimeInMillis() / 86400000;
         long diff = nToday - nDday;
 
+        // make one event data object
         EventInfo event = new EventInfo(title, date, memo, (int)diff, themeNum);
-        // event.setTitle(title);
-        // event.setDate(nYear, nMonth, nDay);
-        // event.setMemo(memo);
 
+        // send event data to MainActivity
         Intent intent = new Intent();
         intent.putExtra("event", event);
         setResult(RESULT_OK, intent);
         finish();
-
-        // Toast.makeText(EditActivity.this, "Done!!", Toast.LENGTH_SHORT).show();
     }
 }

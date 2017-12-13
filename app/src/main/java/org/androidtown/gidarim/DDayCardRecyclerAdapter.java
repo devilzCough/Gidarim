@@ -34,8 +34,10 @@ public class DDayCardRecyclerAdapter extends RecyclerView.Adapter<DDayCardRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         final EventInfo item = items.get(position);
 
+        // set information on the card
         holder.title.setText(item.getTitle());
         holder.date.setText(item.getDate());
 
@@ -50,9 +52,12 @@ public class DDayCardRecyclerAdapter extends RecyclerView.Adapter<DDayCardRecycl
     }
 
     @Override
+    // get item size
     public int getItemCount() {
         return this.items.size();
     }
+
+    // to set the information on the d-day card
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;

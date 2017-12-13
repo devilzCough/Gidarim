@@ -8,6 +8,7 @@ import android.graphics.Color;
 
 public class GidarimConstants {
 
+    // theme color info
     static final int NTHEME = 4;
     static final String[] THEME_TITLE = {"MODERN", "CHOCOLATE", "CHRISTMAS", "COTTON CANDY"};
 

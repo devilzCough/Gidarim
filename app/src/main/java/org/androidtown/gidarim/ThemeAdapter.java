@@ -26,15 +26,19 @@ public class ThemeAdapter extends BaseAdapter {
     }
 
     @Override
+    // get list size
     public int getCount() { return data.size(); }
 
     @Override
+    // get one item in list
     public ThemeInfo getItem(int position) { return data.get(position); }
 
     @Override
+    // get item position(index)
     public long getItemId(int position) { return position; }
 
     @Override
+    // set list name and background color
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {

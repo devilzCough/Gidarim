@@ -6,12 +6,14 @@ import android.os.Parcelable;
 /**
  * Created by iseungjin on 2017. 12. 13..
  */
-
+// to putExtras this object, need to implements Parcelable
 public class EventInfo implements Parcelable {
 
+    // event instances
     String title, memo, date;
     int dDay;
 
+    // to set background color
     int themeNum;
 
     public EventInfo(String _title, String _date, String _memo, int dday, int _themeNum) {
@@ -52,6 +54,7 @@ public class EventInfo implements Parcelable {
         dest.writeInt(themeNum);
     }
 
+    // get, set method
     public String getTitle() { return title; }
     public String getDate() { return date; }
     public String getMemo() { return memo; }
