@@ -1,7 +1,6 @@
 package org.androidtown.gidarim;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 public class ThemeActivity extends AppCompatActivity {
 
     int themeNum;
-    String[] themeList = {"MODERN", "CHOCOLATE"};
-    int[] themeColor = {Color.rgb(83, 142, 166), Color.rgb(92, 75, 81)};
 
     ListView listView;
     ArrayList<ThemeInfo> themeInfo;
@@ -35,7 +32,7 @@ public class ThemeActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.themeList);
         themeInfo = new ArrayList<>();
         for (int i = 0; i < GidarimConstants.NTHEME; i++) {
-            ThemeInfo tmp = new ThemeInfo(themeList[i], themeColor[i]);
+            ThemeInfo tmp = new ThemeInfo(GidarimConstants.THEME_TITLE[i], GidarimConstants.THEME_COLOR[i]);
             themeInfo.add(tmp);
         }
 
