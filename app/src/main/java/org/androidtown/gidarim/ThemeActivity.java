@@ -27,7 +27,11 @@ public class ThemeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme);
 
-        // nTheme = 2;
+        Intent intent = getIntent();
+        themeNum = intent.getExtras().getInt("theme");
+        GridLayout layout = (GridLayout) findViewById(R.id.topBar);
+        layout.setBackgroundColor(GidarimConstants.BAR_COLOR[themeNum]);
+
         listView = (ListView) findViewById(R.id.themeList);
         themeInfo = new ArrayList<>();
         for (int i = 0; i < GidarimConstants.NTHEME; i++) {
@@ -45,7 +49,6 @@ public class ThemeActivity extends AppCompatActivity {
                 GridLayout layout = (GridLayout) findViewById(R.id.topBar);
                 layout.setBackgroundColor(GidarimConstants.BAR_COLOR[position]);
                 themeNum = position;
-                // Toast.makeText(ThemeActivity.this, themeInfo.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }

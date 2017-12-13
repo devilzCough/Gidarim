@@ -3,14 +3,15 @@ package org.androidtown.gidarim;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -18,12 +19,13 @@ public class EditActivity extends AppCompatActivity {
 
     final int DIALOG_DATE = 1;
 
+    int themeNum;
     EditText etTitle, etMemo;
     TextView date;
 
     int nYear, nMonth, nDay;
 
-    EventInfo event;
+    // EventInfo event;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -31,7 +33,12 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        event = new EventInfo();
+        Intent intent = getIntent();
+        themeNum = intent.getExtras().getInt("theme");
+        GridLayout layout = (GridLayout) findViewById(R.id.topBar);
+        layout.setBackgroundColor(GidarimConstants.BAR_COLOR[themeNum]);
+
+        // event = new EventInfo();
 
         Calendar cal = Calendar.getInstance();
         nYear = cal.get(Calendar.YEAR);
@@ -67,7 +74,7 @@ public class EditActivity extends AppCompatActivity {
                                 date.setText(year + ". " + (monthOfYear + 1) + ". " + dayOfMonth);
 
                                 nYear = year;
-                                nMonth = monthOfYear+1;
+                                nMonth = monthOfYear + 1;
                                 nDay = dayOfMonth;
                             }
                         }, nYear, nMonth, nDay);
@@ -87,12 +94,28 @@ public class EditActivity extends AppCompatActivity {
     public void onDoneBtnClicked(View v) {
 
         String title = etTitle.getText().toString();
+        String date = nYear + ". " + nMonth + ". " + nDay;
         String memo = etMemo.getText().toString();
 
-        event.setTitle(title);
-        event.setDate(nYear, nMonth, nDay);
-        event.setMemo(memo);
+        Calendar today = Calendar.getInstance();
+        Calendar dday = Calendar.getInstance();
+        int tmpMonth = nMonth - 1;
+        dday.set(nYear, tmpMonth, nDay);
 
-        Toast.makeText(EditActivity.this, "Done!!", Toast.LENGTH_SHORT).show();
+        long nToday = today.getTimeInMillis() / 86400000;
+        long nDday = dday.getTimeInMillis() / 86400000;
+        long diff = nToday - nDday;
+
+        EventInfo event = new EventInfo(title, date, memo, (int)diff, themeNum);
+        // event.setTitle(title);
+        // event.setDate(nYear, nMonth, nDay);
+        // event.setMemo(memo);
+
+        Intent intent = new Intent();
+        intent.putExtra("event", event);
+        setResult(RESULT_OK, intent);
+        finish();
+
+        // Toast.makeText(EditActivity.this, "Done!!", Toast.LENGTH_SHORT).show();
     }
 }
