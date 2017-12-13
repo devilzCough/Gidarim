@@ -6,35 +6,38 @@
     >
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:id="@+id/card"
+        android:layout_width="350dp"
         android:layout_height="50dp"
         android:columnCount="2"
-        android:background="#f2d1b3">
+        android:background="#f28c8c">
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="20dp"
-            android:layout_columnWeight="3">
+            android:layout_columnWeight="5">
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Meet Freinds"/>
+                android:text=""/>
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017. Jan. 13 (Sat)"
+                android:text=""
                 android:textSize="10sp"/>
         </LinearLayout>
 
         <TextView
-
+            android:id="@+id/dday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D - 31"
+            android:text=""
             android:layout_columnWeight="1"
-            android:layout_gravity="center"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginRight="20dp"/>
     </GridLayout>
 </android.support.v7.widget.CardView>
