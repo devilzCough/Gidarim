@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,11 @@ public class MainActivity extends AppCompatActivity {
     int themeNum;
     ArrayList<EventInfo> eventList;
     EventInfo event;
-    // ImageButton btnSettings, btnAdd;
+
     RecyclerView recyclerView;
+
+    TextView dday;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
+        dday = (TextView) findViewById(R.id.textDday);
+        title = (TextView) findViewById(R.id.textTitle);
     }
 
     @Override
@@ -49,7 +55,17 @@ public class MainActivity extends AppCompatActivity {
                 eventList.add(event);
                 recyclerView.setAdapter(new DDayCardRecyclerAdapter(getApplicationContext(), eventList, R.id.mainView));
 
-                Toast.makeText(this, event.getTitle(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, event.getTitle(), Toast.LENGTH_SHORT).show();
+                int size = eventList.size() - 1;
+                int diff = eventList.get(size).getdDay();
+                if (diff <= 0) {
+                    dday.setText("D " + diff);
+                } else {
+                    dday.setText("D +" + diff);
+                }
+
+                title.setText(eventList.get(size).getTitle());
+
             }
         }
         else if (requestCode == REQUEST_CODE_THEME) {
@@ -66,12 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     recyclerView.setAdapter(new DDayCardRecyclerAdapter(getApplicationContext(), eventList, R.id.mainView));
                 }
-                // GridLayout card = (GridLayout) findViewById(R.id.card);
 
                 bar.setBackgroundColor(GidarimConstants.BAR_COLOR[themeNum]);
                 dashboard.setBackgroundColor(GidarimConstants.THEME_COLOR[themeNum]);
-                // card.setBackgroundColor(GidarimConstants.LIST_COLOR[themeNum]);
-
             }
         }
     }

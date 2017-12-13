@@ -58,16 +58,18 @@
             >
 
             <TextView
+                android:id="@+id/textDday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D - 333"
+                android:text="D - 0"
                 android:textSize="45sp"
                 android:textColor="#ffffff"/>
 
             <TextView
+                android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="meet friends..."
+                android:text="nothing..."
                 android:textSize="15sp"
                 android:textColor="#ffffff"/>
         </LinearLayout>
